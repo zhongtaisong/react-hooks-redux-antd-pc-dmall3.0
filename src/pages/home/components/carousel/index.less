@@ -1,0 +1,120 @@
+@import '~@com/index.less';
+
+.dm_carousel {
+    &__top, &__bottom {
+        .ant-carousel {
+            .slick-slider {
+                .slick-dots {
+                    li {
+                        width: 30px;
+                    }
+                    .slick-active {
+                        width: 38px;
+                        button {
+                            background: @main-color;
+                            opacity: 1;
+                        }
+                    }
+                }
+            }
+        }
+
+    }
+    &__top {
+        min-height: 440px;
+        border: solid 1px #fff;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        .ant-carousel {
+            .slick-list {
+                .slick-slide {
+                    img {
+                        width: 100%;
+                    }
+                }
+            }
+            .slick-dots {
+                right: auto;
+                margin-left: 5%;
+                li {
+                    button {
+                        background: #fff;
+                        opacity: 1;
+                    }
+                }
+            }
+        }
+    }
+    &__bottom {
+        margin: 20px 0 30px;
+        border-radius: 72px;
+        overflow: hidden;
+        background: #fff;
+        position: relative;
+        .slick-slider {
+            padding-bottom: 10px;
+            position: relative;
+            >button {
+                position: absolute;
+                top: 50%;
+                transform: translateY(-50%);
+                border: 0 none;
+                background: rgba(31, 45, 61, .11);
+                color: #fff;
+                z-index: 6;
+                &:hover, &:focus {                
+                    background: rgba(31, 45, 61, .23) !important;
+                    color: #fff !important;
+                    border: 0 none;
+                }
+                &.slick-prev {
+                    left: 16px;
+                }
+                &.slick-next {
+                    right: 16px;
+                }
+            }
+            .slick-list {
+                .slick-track {
+                    display: flex;
+                    justify-content: flex-start;
+                    align-items: center;
+                    .slick-slide {
+                        max-width: calc(100% / 3);
+                        overflow: hidden;
+                        >div {
+                            .ant-card {
+                                display: flex !important;
+                                align-items: center;
+                                justify-content: flex-start;
+                                .ant-card-cover {
+                                    width: 100%;
+                                }
+                                .ant-card-body {
+                                    padding-left: 12px;
+                                    padding-right: 12px;
+                                    max-width: 70%;
+                                    .ant-card-meta-title {
+                                        color: @main-color;
+                                        font-weight: bold;
+                                    }
+                                    .ant-card-meta-description {
+                                        color: inherit;
+                                    }
+                                }
+                            }
+                            &:hover {
+                                .ant-card {
+                                    .ant-card-body {
+                                        .ant-card-meta-description {
+                                            color: @main-color;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

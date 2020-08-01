@@ -1,7 +1,7 @@
 import React, { Fragment } from 'react';
 import { Row, Col, Input, Button, Badge, message } from 'antd';
 import { SearchOutlined, ShoppingCartOutlined } from '@ant-design/icons';
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 // import { observer } from 'mobx-react';
 // logo图片
 import logoImg from '@img/logo.png';
@@ -27,9 +27,9 @@ export default () => {
             <Row className='common_width'>
                 <Col span={ 4 } className='dm_headerBar_search__logo' style={ logoBg } title='首页'></Col>
                 <Col span={ 11 }>
-                    <Link to='/'>首页</Link>
-                    <Link to='/'>杂货铺</Link>
-                    <Link to='/'>留言</Link>
+                    <NavLink exact activeClassName='active' to='/home'>首页</NavLink>
+                    <NavLink activeClassName='active' to='/products'>杂货铺</NavLink>
+                    <NavLink activeClassName='active' to='/a'>留言</NavLink>
                 </Col>
                 <Col span={ 9 }>
                     <Input.Search placeholder="搜索商品" style={{ paddingRight: '10px' }} enterButton />

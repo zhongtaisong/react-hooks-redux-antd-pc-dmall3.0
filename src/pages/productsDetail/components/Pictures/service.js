@@ -1,11 +1,11 @@
 import axios from '@axios';
-// 单品推广 - 查询
-const productsListUrl = 'index/onepush';
+// 详情图片
+const introimgsUrl = 'details/introimgs';
 
 class Service {
-    productsListData = (req = {}) => {
+    introimgsData = (req = {}) => {
         return new Promise((resolve, reject) => {
-            axios.get(productsListUrl, {
+            axios.get(introimgsUrl, {
                 params: req
             }).then(res => {
                 resolve(res);

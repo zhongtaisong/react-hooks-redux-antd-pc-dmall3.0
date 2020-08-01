@@ -1,6 +1,6 @@
 import Home from '@pages/home';
-// import Products from '@pages/Products';
-// import ProductsDetail from '@pages/ProductsDetail';
+import Products from '@pages/products';
+import ProductsDetail from '@pages/productsDetail';
 // import MyShoppingCart from '@pages/MyShoppingCart';
 // import SettlementPage from '@pages/SettlementPage';
 // import OrderDetails from '@pages/OrderDetails';
@@ -23,23 +23,19 @@ export default [
     { 
         path: '/home',
         component: Home,
-        title: '首页',
+        title: '首页'
+    },
+    { 
+        path: '/products',
+        component: Products,
+        title: '杂货铺',
         exact: true
     },
-    // { 
-    //     id: 2,
-    //     path: '/views/home',
-    //     name: 'Home',
-    //     component: Home,
-    //     title: '首页'
-    // },
-    // { 
-    //     id: 3,
-    //     path: '/views/products',
-    //     name: 'Products',
-    //     component: Products,
-    //     title: '杂货铺'
-    // },
+    { 
+        path: '/products/detail/:id',
+        component: ProductsDetail,
+        title: '商品详情'
+    },
     // { 
     //     id: 4,
     //     path: '/views/web',
@@ -85,13 +81,6 @@ export default [
     //     component: UserCenter,
     //     title: '用户中心',
     //     noDirectAccess: true
-    // },
-    // { 
-    //     id: 10,
-    //     path: '/views/products/detail/:id',
-    //     name: 'ProductsDetail',
-    //     component: ProductsDetail,
-    //     title: '商品详情'
     // },
     // { 
     //     id: 11,

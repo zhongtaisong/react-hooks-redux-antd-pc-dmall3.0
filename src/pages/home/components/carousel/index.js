@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, Fragment } from 'react';
 import { Carousel, Card, Button } from 'antd';
 import Slider from "react-slick";
 import { Link } from 'react-router-dom';
@@ -14,7 +14,7 @@ export default () => {
     useEffect(() => {
         getBannerData();
         getOnepushData();
-    }, [])
+    }, []);
     
     // 获取轮播图 - 数据
     const getBannerData = async () => {
@@ -27,7 +27,7 @@ export default () => {
         }catch(err) {
             console.log(err);
         }
-    }
+    };
     
     // 获取单品推广 - 数据
     const getOnepushData = async () => {
@@ -40,7 +40,7 @@ export default () => {
         }catch(err) {
             console.log(err);
         }
-    }
+    };
 
     return (
         <div className='dm_carousel common_width'>
@@ -50,7 +50,7 @@ export default () => {
                         carouselList.map( item => {
                             return (
                                 <Link key={ item.id } 
-                                    to={'/views/products/detail/' + item.id}
+                                    to={'/products/detail/' + item.id}
                                 >
                                     <img src={ `${ React.$url }${ item.bannerPic }` } title={ item.description } />
                                 </Link>
@@ -88,4 +88,4 @@ export default () => {
             </div>
         </div>
     );
-}
+};

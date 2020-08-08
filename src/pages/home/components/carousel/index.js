@@ -1,4 +1,4 @@
-import React, { useState, useEffect, Fragment } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Carousel, Card, Button } from 'antd';
 import Slider from "react-slick";
 import { Link } from 'react-router-dom';
@@ -6,7 +6,7 @@ import { LeftOutlined, RightOutlined } from '@ant-design/icons';
 // less样式
 import './index.less';
 // ------------------------------------------------- 首页 - 轮播图 -------------------------------- //
-export default () => {
+export default ({ history }) => {
 
     const [carouselList, setCarouselList] = useState([]);
     const [onePushList, setOnePushList] = useState([]);
@@ -78,6 +78,7 @@ export default () => {
                                     hoverable={ false }
                                     bordered={ false }
                                     cover={<img src={ `${ React.$url }${ item.mainPicture }` } title={ item.description } />}
+                                    onClick={ () => history.push('/products/detail/' + item.id) }
                                 >
                                     <Card.Meta title={ item.productName } description={ item.description } />
                                 </Card>

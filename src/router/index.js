@@ -23,7 +23,8 @@ export default [
     { 
         path: '/home',
         component: Home,
-        title: '首页'
+        title: '首页',
+        exact: true
     },
     { 
         path: '/products',
@@ -34,7 +35,8 @@ export default [
     { 
         path: '/products/detail/:id',
         component: ProductsDetail,
-        title: '商品详情'
+        title: '商品详情',
+        exact: true
     },
     // { 
     //     id: 4,

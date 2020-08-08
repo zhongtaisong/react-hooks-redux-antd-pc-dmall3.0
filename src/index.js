@@ -16,14 +16,9 @@ import service from '@service';
 // 日期国际化
 moment.locale('zh-cn');
 
-const selectDic = sessionStorage.getItem('selectDic') || '{}';
-const tableDic = sessionStorage.getItem('tableDic') || '{}';
-
 // 全局变量
 React.$url = PUBLIC_URL;
 React.$service = service;
-React.$selectDic = JSON.parse(selectDic);
-React.$tableDic = JSON.parse(tableDic);
 
 // 超出指定行内容溢出，则显示省略号...
 React.$ellipsis = (value, len) => {

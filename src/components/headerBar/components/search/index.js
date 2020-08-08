@@ -1,7 +1,7 @@
 import React, { Fragment } from 'react';
 import { Row, Col, Input, Button, Badge, message } from 'antd';
 import { SearchOutlined, ShoppingCartOutlined } from '@ant-design/icons';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useHistory } from 'react-router-dom';
 // import { observer } from 'mobx-react';
 // logo图片
 import logoImg from '@img/logo.png';
@@ -22,10 +22,11 @@ const logoBg = {
 
 // ------------------------------------------------- 导航菜单 ------------------------------------ //
 export default () => {
+    const history = useHistory();
     return (        
         <div className='dm_headerBar_search'>
             <Row className='common_width'>
-                <Col span={ 4 } className='dm_headerBar_search__logo' style={ logoBg } title='首页'></Col>
+                <Col span={ 4 } className='dm_headerBar_search__logo' style={ logoBg } title='首页' onClick={ () => history.push('/') }></Col>
                 <Col span={ 11 }>
                     <NavLink exact activeClassName='active' to='/home'>首页</NavLink>
                     <NavLink activeClassName='active' to='/products'>杂货铺</NavLink>

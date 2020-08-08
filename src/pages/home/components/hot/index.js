@@ -7,7 +7,7 @@ import './index.less';
 const { Meta } = Card;
 const { Title } = Typography;
 // ------------------------------------------------- 首页 - 热门推荐 -------------------------------- //
-export default () => {
+export default (props) => {
     
     const [productsList, setProductsList] = useState([]);
 
@@ -44,9 +44,7 @@ export default () => {
                                             alt=''
                                             src={ `${ React.$url }${ item.mainPicture }` }
                                             title={ item.productName }
-                                            onClick={() => {
-                                                // this.props.history.push(`/views/products/detail/${item.id}`);
-                                            }}
+                                            onClick={() => props.history.push(`/products/detail/${item.id}`)}
                                         />
                                     }
                                 >
@@ -54,7 +52,7 @@ export default () => {
                                         title={ <Title level={ 4 }><span className='unit'>￥</span>{ item.price ? Number(item.price).toFixed(2) : 0 }</Title> }
                                         description={ 
                                             <Link 
-                                                to={`/views/products/detail/${item.id}`}
+                                                to={`/products/detail/${item.id}`}
                                                 title={ item.description }
                                             >{ React.$ellipsis(item.description, 50) }</Link> 
                                         }

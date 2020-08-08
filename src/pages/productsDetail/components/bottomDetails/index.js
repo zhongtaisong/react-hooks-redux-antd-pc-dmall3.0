@@ -26,8 +26,10 @@ const _info = [
     { id: 16, label: '显存容量', key: 'gpuCapacity', value: '' },
     { id: 17, label: '机身材质', key: 'bodyMaterial', value: '' }
 ];
-export default ({ tabsChange=()=>{}, params={}, detailsPic=[], activeKey }) => {
+export default ({ params={}, detailsPic=[] }) => {
 
+    // 字典表
+    const tableDic = JSON.parse(sessionStorage.getItem('tableDic') || '{}');
     const [info, setInfo] = useState(_info);
 
     useEffect(() => {
@@ -43,13 +45,13 @@ export default ({ tabsChange=()=>{}, params={}, detailsPic=[], activeKey }) => {
 
     return (
         <div className='CommodityDetails'>
-            <Tabs defaultActiveKey="1" style={{ padding: '0 20px', color: '#666' }} onChange={ tabsChange }>
+            <Tabs defaultActiveKey='1' style={{ padding: '0 20px', color: '#666' }}>
                 <TabPane tab={ <span className='tab_title'>商品介绍</span> } key={ 1 }>
                     <dl className='Parameter'>
                         {
                             info.map(item => {
                                 if( item.id == 1 ) {
-                                    return <dt key={ item.id } title={ item.value }>{ item.label }：{ React.$tableDic['BRAND_LIST'] ? React.$tableDic['BRAND_LIST'][item.value] : item.value }</dt>;
+                                    return <dt key={ item.id } title={ item.value }>{ item.label }：{ tableDic['BRAND_LIST'] ? tableDic['BRAND_LIST'][item.value] : item.value }</dt>;
                                 }
                                 return <dd key={ item.id } title={ item.value }>{ item.label }：{ item.value }</dd>
                             })
@@ -68,11 +70,7 @@ export default ({ tabsChange=()=>{}, params={}, detailsPic=[], activeKey }) => {
                     </Row>
                 </TabPane>
                 <TabPane tab={ <span className='tab_title'>商品评价</span> } key={ 2 } >
-                    {
-                        activeKey == 2 ? (
-                            <Comments pid={ params.id || '' } />
-                        ) : ''
-                    }
+                    <Comments pid={ params.id || '' } />
                 </TabPane>
             </Tabs>
         </div>

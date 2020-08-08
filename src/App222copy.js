@@ -1,23 +1,9 @@
 import React, { useEffect } from 'react';
-import { HashRouter, Route, Switch, Redirect, useLocation } from 'react-router-dom';
-// 顶部导航 - 组件
-import { HeaderBar, FooterBar } from '@com';
-// 路由
-import routes from './router';
+import { HashRouter, Route, Switch, Redirect } from 'react-router-dom';
+// 根组件
+import RootComponent from '@pages';
 // 主入口less样式
 import './App.less';
-
-// 重置滚动条
-const ScrollTop = ({ children }) => {
-
-    const { pathname } = useLocation() || {};
-    
-    useEffect(() => {
-        window.scrollTo(0, 0);
-    }, [pathname])
-
-    return children;
-}
 
 export default () => {
 
@@ -56,24 +42,14 @@ export default () => {
             console.log(error);
         }
     }
-    
+
     return (
         <div className="dm_app">
             <HashRouter basename='/dm'>
-                <HeaderBar />
-                <ScrollTop>
-                    <Switch>
-                        {
-                            routes.map((item, index) => {
-                                return (
-                                    <Route key={ index } path={ item.path } exact={ item.exact } component={ item.component } />
-                                );
-                            })
-                        }
-                        <Redirect from='/' to='/home' />        
-                    </Switch>
-                </ScrollTop>
-                <FooterBar />    
+                <Switch>
+                    <Route path='/home' component={ RootComponent } />
+                    <Redirect exact from='/' to='/home' />
+                </Switch>
             </HashRouter>
         </div>
     );

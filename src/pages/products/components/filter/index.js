@@ -1,7 +1,7 @@
 import React, { Fragment } from 'react';
 import { Row, Col } from 'antd';
 // ------------------------------------------------- 杂货铺 - 筛选条件 -------------------------------- //
-export default ({ filterList=[], currentFilter=()=>{} }) => {
+export default ({ filterList=[], currentFilter=()=>{}, tableDic={} }) => {
     return (
         <div className='dm_products__filter'>
             {
@@ -15,7 +15,7 @@ export default ({ filterList=[], currentFilter=()=>{} }) => {
                                         return (
                                             <span key={ index }
                                                 onClick={ currentFilter.bind(this, 'brandId', item) }
-                                            >{ React.$tableDic.BRAND_LIST ? React.$tableDic.BRAND_LIST[item] : item }</span>
+                                            >{ tableDic.BRAND_LIST ? tableDic.BRAND_LIST[item] : item }</span>
                                         );
                                     })
                                 }

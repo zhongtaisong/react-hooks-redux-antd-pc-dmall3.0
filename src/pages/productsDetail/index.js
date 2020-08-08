@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useParams, useLocation, useHistory } from 'react-router-dom';
 // 接口服务
 import { getDetailsData } from './service';
 // 上半部分 - 组件
@@ -27,13 +28,11 @@ export default (props) => {
     const [actionIndex, setActionIndex] = useState(0);
     // 商品数量
     const [num, setNum] = useState(1);
-    // 商品id
-    const [id, setId] = useState();
     // tab索引
-    const [activeKey, setActiveKey] = useState();
+    const [activeKey, setActiveKey] = useState(1);
+    const { id } = useParams() || {};
 
     useEffect(() => {
-        const { id } = props.match.params || {};
         getDetailsData({ id }).then(({ basicInfo, imgList, params, specs, detailsPic }) => {
             setBasicInfo(basicInfo);
             setImgList(imgList);
@@ -41,8 +40,7 @@ export default (props) => {
             setSpecs(specs);
             setDetailsPic(detailsPic);
         })
-        setId(id);
-    }, [props])
+    }, [id])
 
     // 上半部分 - 核心方法
     const handleTopSpecification = (_this) => {
@@ -57,6 +55,7 @@ export default (props) => {
                     props.history.push(`/products/detail/${id}`);
                     setNum(1);
                     setActionIndex(0)
+                    setActiveKey(1);
                 }
             },
             // 监听 - 商品数量
@@ -122,8 +121,6 @@ export default (props) => {
                 <BottomDetails 
                     params={ params }
                     detailsPic={ detailsPic }
-                    activeKey={ activeKey }
-                    tabsChange={ handleBottomDetails('tabsChange') }
                 />
             </div>
         </div>

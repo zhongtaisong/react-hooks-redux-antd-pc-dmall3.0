@@ -14,7 +14,8 @@ const { Title } = Typography;
 const SIZE = 10;
 // ------------------------------------------------- 杂货铺 -------------------------------- //
 export default () => {
-
+    // 字典表
+    const tableDic = JSON.parse(sessionStorage.getItem('tableDic') || '{}');
     // 筛选条件 - 列表
     const [filterList, setFilterList] = useState([]);
     // 商品 - 列表
@@ -132,7 +133,7 @@ export default () => {
                                         return (
                                             <Tag color='blue' key={ index } visible={ visible[item] } closable 
                                                 onClose={ handleFilter('deleteFilter').bind(this, item) }
-                                            >{ item == 'brandId' ? React.$tableDic.BRAND_LIST[filter[item]] : filter[item] }</Tag>
+                                            >{ item == 'brandId' && tableDic ? tableDic.BRAND_LIST[filter[item]] : filter[item] }</Tag>
                                         );
                                     })
                                 }
@@ -144,7 +145,7 @@ export default () => {
                     }
                 </div>
                 {/* 筛选条件 */}
-                <FilterComponent filterList={ filterList } currentFilter={ handleFilter('getFilter') } />
+                <FilterComponent filterList={ filterList } currentFilter={ handleFilter('getFilter') } tableDic={ tableDic } />
                 {
                     productList.length ? (
                         <Row className='dm_products__all'>

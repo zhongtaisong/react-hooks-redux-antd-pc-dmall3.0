@@ -33,7 +33,7 @@ export default (props) => {
     const { id } = useParams() || {};
 
     useEffect(() => {
-        getDetailsData({ id }).then(({ basicInfo, imgList, params, specs, detailsPic }) => {
+        getDetailsData({ id })(props._service).then(({ basicInfo, imgList, params, specs, detailsPic }) => {
             setBasicInfo(basicInfo);
             setImgList(imgList);
             setParams(params);
@@ -86,7 +86,7 @@ export default (props) => {
             }
         }
         return function() {
-            typeof obj[_this] === 'function' && obj[_this].apply(this, arguments);
+            typeof obj[_this] === 'function' && obj[_this].apply(this, ...arguments);
         }
     }
 
@@ -99,7 +99,7 @@ export default (props) => {
             }
         };
         return function() {
-            typeof obj[_this] === 'function' && obj[_this].apply(this, arguments);
+            typeof obj[_this] === 'function' && obj[_this].apply(this, ...arguments);
         }
     }
     

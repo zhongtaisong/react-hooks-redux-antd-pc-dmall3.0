@@ -17,7 +17,7 @@ export default (props) => {
     
     // 获取热门推荐 - 数据
     const getHotData = async () => {
-        const res = await React.$service.getHotData();
+        const res = await props._service.getHotData();
         try{
             if( res.data.code === 200 ){
                 const { data=[] } = res.data || {};
@@ -42,7 +42,7 @@ export default (props) => {
                                     cover={
                                         <img
                                             alt=''
-                                            src={ `${ React.$url }${ item.mainPicture }` }
+                                            src={ `${ props._url }${ item.mainPicture }` }
                                             title={ item.productName }
                                             onClick={() => props.history.push(`/products/detail/${item.id}`)}
                                         />
@@ -54,7 +54,7 @@ export default (props) => {
                                             <Link 
                                                 to={`/products/detail/${item.id}`}
                                                 title={ item.description }
-                                            >{ React.$ellipsis(item.description, 50) }</Link> 
+                                            >{ props._ellipsis(item.description, 50) }</Link> 
                                         }
                                     />
                                 </Card>

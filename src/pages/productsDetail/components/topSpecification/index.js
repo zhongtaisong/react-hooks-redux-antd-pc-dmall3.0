@@ -7,7 +7,7 @@ const { Title, Paragraph } = Typography;
 // ------------------------------------------- 商品详情 - 规格 ---------------------------------- //
 export default ({ 
     basicInfo={}, imgList=[], specs=[], handleTogglePic=()=>{}, actionIndex, handleToggleSpecs=()=>{}, watchNumber=()=>{},
-    immediatePurchase=()=>{}, handleAddCart=()=>{}, num=1
+    immediatePurchase=()=>{}, handleAddCart=()=>{}, num=1, _url
 }) => {
     return (
         <div className='CommoditySpecification'>
@@ -17,7 +17,7 @@ export default ({
                         <dt>
                             {
                                 imgList[actionIndex] ? (
-                                    <img src={ React.$url + imgList[actionIndex] } alt='loading...' />
+                                    <img src={ _url + imgList[actionIndex] } alt='loading...' />
                                 ) : ''
                             }
                         </dt>
@@ -26,7 +26,7 @@ export default ({
                                 imgList.map((item, index) => {
                                     return (
                                         <div key={ index } onMouseOver={ handleTogglePic.bind(this, index) } className={ actionIndex === index ? 'active' : '' }>
-                                            <img src={ React.$url + item } alt='' />
+                                            <img src={ _url + item } alt='' />
                                         </div>
                                     );
                                 })

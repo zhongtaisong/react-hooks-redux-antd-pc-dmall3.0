@@ -6,7 +6,7 @@ import { LeftOutlined, RightOutlined } from '@ant-design/icons';
 // less样式
 import './index.less';
 // ------------------------------------------------- 首页 - 轮播图 -------------------------------- //
-export default ({ history }) => {
+export default ({ history, _url, _service }) => {
 
     const [carouselList, setCarouselList] = useState([]);
     const [onePushList, setOnePushList] = useState([]);
@@ -18,7 +18,7 @@ export default ({ history }) => {
     
     // 获取轮播图 - 数据
     const getBannerData = async () => {
-        const res = await React.$service.getBannerData();
+        const res = await _service.getBannerData();
         try{
             if( res.data.code === 200 ){
                 const { data=[] } = res.data || {};
@@ -31,7 +31,7 @@ export default ({ history }) => {
     
     // 获取单品推广 - 数据
     const getOnepushData = async () => {
-        const res = await React.$service.getOnepushData();
+        const res = await _service.getOnepushData();
         try{
             if( res.data.code === 200 ){
                 const { data=[] } = res.data || {};
@@ -52,7 +52,7 @@ export default ({ history }) => {
                                 <Link key={ item.id } 
                                     to={'/products/detail/' + item.id}
                                 >
-                                    <img src={ `${ React.$url }${ item.bannerPic }` } title={ item.description } />
+                                    <img src={ `${ _url }${ item.bannerPic }` } title={ item.description } />
                                 </Link>
                             );
                         } )
@@ -77,7 +77,7 @@ export default ({ history }) => {
                                     key={ item.id }
                                     hoverable={ false }
                                     bordered={ false }
-                                    cover={<img src={ `${ React.$url }${ item.mainPicture }` } title={ item.description } />}
+                                    cover={<img src={ `${ _url }${ item.mainPicture }` } title={ item.description } />}
                                     onClick={ () => history.push('/products/detail/' + item.id) }
                                 >
                                     <Card.Meta title={ item.productName } description={ item.description } />

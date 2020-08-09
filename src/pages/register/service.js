@@ -1,13 +1,11 @@
 import axios from '@axios';
-// 本周热门商品 - 查询
-const productsListUrl = 'index/hot';
+
+const registerUrl = `users/reg`;
 
 class Service {
-    productsListData = (req = {}) => {
+    registerData = (req = {}) => {
         return new Promise((resolve, reject) => {
-            axios.get(productsListUrl, {
-                params: req
-            }).then(res => {
+            axios.post(registerUrl, req).then(res => {
                 resolve(res);
             }).catch(err => {
                 console.log(err);

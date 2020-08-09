@@ -1,12 +1,12 @@
 import axios from "axios";
 import { message } from 'antd';
 // 设置
-import { PUBLIC_URL, BLACK_LIST_PATH } from '@config';
+import { $url, BLACK_LIST_PATH } from '@config';
 // 全局数据
 import $state from '@store';
 
 const $axios = axios.create({
-    baseURL: PUBLIC_URL,
+    baseURL: $url,
     timeout: 60 * 1000,
     withCredentials: true
     // headers: {'X-Custom-Header': 'foobar'}

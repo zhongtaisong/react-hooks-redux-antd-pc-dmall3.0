@@ -8,10 +8,12 @@
 // import searchAreaState from '@com/headerBar/components/searchArea/state';
 // // 商品详情 - 加入购物车 - 数据
 // import commoditySpecificationState from '@pages/ProductsDetail/components/CommoditySpecification/state';
+// 全局窗口关闭统一时间
+export const $globalCloseTime = 1;
 // url前缀
-export const PUBLIC_URL = 'http://127.0.0.1:8000/api/';
+export const $url = 'http://127.0.0.1:8000/api/';
 // 加密key
-export const PWD_KEY = 'fjreqjklnvmsn9u9084931jj雨色轻风意柔情怜花殇12612132212';
+export const $key = 'fjreqjklnvmsn9u9084931jj雨色轻风意柔情怜花殇12612132212';
 // 路由黑名单
 export const BLACK_LIST_PATH = [
     // 我的购物车

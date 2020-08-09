@@ -1,14 +1,15 @@
+import axios from 'axios';
 import $axios from './axios';
 
 export default class Http {
 
-    static request(method='get', url, data={}) {
-        return $axios[method]( 
-            url, 
-            method == 'get' ? {
+    static request( method='get', url, data={} ) {
+        return $axios({
+            method, url, 
+            data: method == 'get' ? {
                 params: {...data}
             } : data
-        ).then(res => {
+        }).then(res => {
             return this.isSuccess(res);
         })
     }

@@ -26,7 +26,7 @@ const _info = [
     { id: 16, label: '显存容量', key: 'gpuCapacity', value: '' },
     { id: 17, label: '机身材质', key: 'bodyMaterial', value: '' }
 ];
-export default ({ params={}, detailsPic=[] }) => {
+export default ({ params={}, detailsPic=[], _url }) => {
 
     // 字典表
     const tableDic = JSON.parse(sessionStorage.getItem('tableDic') || '{}');
@@ -62,7 +62,7 @@ export default ({ params={}, detailsPic=[] }) => {
                             detailsPic.map((item, index) => {
                                 return (
                                     <Col span={ 24 } style={{ textAlign: 'center' }} key={ index }>
-                                        <img src={ React.$url + item } style={{ width: '750px', height: 'auto' }} /> 
+                                        <img src={ _url + item } style={{ width: '750px', height: 'auto' }} /> 
                                     </Col>
                                 );
                             })

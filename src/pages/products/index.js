@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Row, Col, Card, Button, InputNumber, Typography, Pagination, Tag, Empty } from 'antd';
 import { Link } from 'react-router-dom';
 // 接口服务
-import { getFilterData, getProductsData } from './service';
+import service from './service';
 // 筛选条件 - 组件
 import FilterComponent from './components/filter';
 // 样式
@@ -13,7 +13,7 @@ const { Title } = Typography;
 // 一页展示多少条数据
 const SIZE = 10;
 // ------------------------------------------------- 杂货铺 -------------------------------- //
-export default () => {
+export default ({ history, _url, _ellipsis, _service }) => {
     // 字典表
     const tableDic = JSON.parse(sessionStorage.getItem('tableDic') || '{}');
     // 筛选条件 - 列表
@@ -32,10 +32,10 @@ export default () => {
     const [total, setTotal] = useState(SIZE);
 
     useEffect(() => {
-        getFilterData().then(data => {
+        service('getFilterData', _service)().then(data => {
             setFilterList(data);
         });
-        getProductsData({
+        service('getProductsData', _service)({
             current,
             pageSize,
             onLine: 100,
@@ -56,7 +56,7 @@ export default () => {
                 setFilter(filter);
                 setCurrent(1);
 
-                getProductsData({
+                service('getProductsData', _service)({
                     current: 1,
                     pageSize,
                     onLine: 100,
@@ -92,7 +92,7 @@ export default () => {
             }
         };
         return function() {
-            typeof obj[_this] === 'function' && obj[_this].apply(this, arguments);
+            typeof obj[_this] === 'function' && obj[_this].apply(this, ...arguments);
         };
     }
 
@@ -101,7 +101,7 @@ export default () => {
 
         setCurrent(page);
 
-        getProductsData({
+        service('getProductsData', _service)({
             current: page,
             pageSize,
             onLine: 100,
@@ -159,8 +159,8 @@ export default () => {
                                                 cover={
                                                     <img
                                                         alt=''
-                                                        src={ `${ React.$url }${ item.mainPicture }` }
-                                                        // onClick={() => this.props.history.push(`/views/products/detail/${item.id}`)}
+                                                        src={ `${ _url }${ item.mainPicture }` }
+                                                        onClick={() => history.push(`/products/detail/${item.id}`)}
                                                         title={ item.copywriting }
                                                     />
                                                 }
@@ -177,9 +177,9 @@ export default () => {
                                                     title={ <Title level={ 4 }><span className='unit'>￥</span>{ item.price ? Number(item.price).toFixed(2) : 0 }</Title> }
                                                     description={ 
                                                         <Link 
-                                                            to={`/views/products/detail/${item.id}`}
+                                                            to={`/products/detail/${item.id}`}
                                                             title={ item.description }
-                                                        >{ React.$ellipsis(item.description, 45) }</Link> 
+                                                        >{ _ellipsis(item.description, 45) }</Link> 
                                                     }
                                                 />
                                             </Card>

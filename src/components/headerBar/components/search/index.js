@@ -2,13 +2,8 @@ import React, { Fragment } from 'react';
 import { Row, Col, Input, Button, Badge, message } from 'antd';
 import { SearchOutlined, ShoppingCartOutlined } from '@ant-design/icons';
 import { NavLink, useHistory } from 'react-router-dom';
-// import { observer } from 'mobx-react';
 // logo图片
 import logoImg from '@img/logo.png';
-// 数据
-// import state from './state';
-// // 全局数据
-// import $state from '@store';
 // less样式
 import './index.less';
 
@@ -35,7 +30,9 @@ export default () => {
                 <Col span={ 9 }>
                     <Input.Search placeholder="搜索商品" style={{ paddingRight: '10px' }} enterButton />
                     <Badge showZero count={ 66 } overflowCount={ 99 }>
-                        <Button icon={<ShoppingCartOutlined />} type="primary" className='dm_headerBar_search__cart' >我的购物车</Button>
+                        <Button icon={<ShoppingCartOutlined />} type="primary" className='dm_headerBar_search__cart' 
+                            onClick={ () => history.push('/products/cart') }
+                        >我的购物车</Button>
                     </Badge>
                 </Col>
             </Row>

@@ -1,8 +1,8 @@
 import Http from './http';
 
 // 发送 - 登录 - 数据
-export const postLogData = (data = {}) => {
-    return Http.post('users/log', data);
+export const postLogData = (data = {}, cancelAxios) => {
+    return Http.post('users/log', data, cancelAxios);
 }
 
 // 发送 - 验证信息 - 数据

@@ -1,6 +1,7 @@
 import React, { Fragment } from 'react';
 import { Row, Col, message } from 'antd';
 import { EnvironmentOutlined } from '@ant-design/icons';
+import { Link } from 'react-router-dom';
 // import { observer } from 'mobx-react';
 // 数据
 // import state from './state';
@@ -32,11 +33,11 @@ export default () => {
                             </Fragment>
                         )
                     } */}
-                    <span>登录</span>
-                    <span>注册</span>
-                    <span>我的订单</span>
-                    <span>我的收藏</span>
-                    <span>用户中心</span>
+                    <Link to='/login'>登录</Link>
+                    <Link to='/'>注册</Link>
+                    <Link to='/'>我的订单</Link>
+                    <Link to='/'>我的收藏</Link>
+                    <Link to='/'>用户中心</Link>
                 </Col>
             </Row>
         </div>

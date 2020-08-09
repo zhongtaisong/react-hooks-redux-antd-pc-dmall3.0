@@ -6,7 +6,7 @@ import { getCurrentCommentData, postUpdateCommentData } from './service';
 // less样式
 import './index.less';
 // ------------------------------------------------------ 商品评价 ---------------------------------- //
-export default ({ pid }) => {
+export default ({ pid, _url }) => {
 
     // 评价列表
     const [commentList, setCommentList] = useState([]);
@@ -62,7 +62,7 @@ export default ({ pid }) => {
                                             </span>
                                         ] }
                                         author={ item.uname }
-                                        avatar={ <Avatar src={ item.avatar ? React.$url + item.avatar : '' } alt="avatar" /> }
+                                        avatar={ <Avatar src={ item.avatar ? _url + item.avatar : '' } alt="avatar" /> }
                                         content={
                                             <p style={{ fontSize: '14px' }}>{ item.content }</p>
                                         }

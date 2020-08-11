@@ -71,8 +71,9 @@ $axios.interceptors.response.use(
         const { data={}, config={} } = response || {};
 
         if( data ){
-            loading.hideLoading('隐藏loading');
-            data.msg && message.success(data.msg, $globalCloseTime);          
+            loading.hideLoading(() => {
+                data.msg && message.success(data.msg, $globalCloseTime);
+            });            
         }
         return response;
     }, 

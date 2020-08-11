@@ -1,22 +1,17 @@
 import React, { useState, useEffect } from 'react';
-import { Form, message, Spin } from 'antd';
-import { Link, useLocation } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 // 登录 - 组件
 import LoginComponents from './components/loginComponents';
 // 忘记密码
-// import ForgetPassword from './components/ForgetPassword';
+import ForgetPwdComponents from './components/forgetPwdComponents';
 // 新密码
-// import NewPassword from './components/NewPassword';
-// 设置
-// import { indexState, PWD_KEY } from '@config';
+import NewPwdComponents from './components/newPwdComponents';
 // 背景图片
 import bigImg from '@img/register/bg.png';
 // logo图片
 import logoImg from '@img/logo2.png';
 // 接口服务
 import service from './service';
-// 数据
-// import state from './state';
 // less样式
 import './index.less';
 
@@ -26,87 +21,9 @@ const loginBg = {
 };
 
 // ----------------------------------------- 登录、忘记密码、新密码 ----------------------------------------- //
-// class Login extends React.Component {
-
-//     // code: 0表示登录组件，1忘记密码组件，2新密码组件
-//     constructor(props) {
-//         super(props);
-//         this.state = {
-//             code: 0
-//         };
-//     }
-
-//     componentDidMount() {
-//         this.props.history && state.setHistory( this.props.history );
-//         indexState.oauthData();
-//     }
-
-//     // 登录
-//     loginSubmit = () => {
-//         this.props.form.validateFields((err, values) => {
-//             if (!err) {
-//                 values.upwd = this.$md5( values.upwd + PWD_KEY );
-//                 // 0表示不记住密码， 1表示记住密码
-//                 values.isRemember = values.isRemember && values.isRemember.length ? 1 : 0;
-//                 state.loginData( values );
-//             }
-//         });
-//     };
-
-//     // 跳转忘记密码组件
-//     handleTarget = (that) => {
-//         if( that === 'forget' ){
-//             this.setState({
-//                 code: 1
-//             });
-//         }else if( that === 'newPwd' ){
-//             this.props.form.validateFields(async (err, values) => {
-//                 if (!err) {
-//                     values.uname = values.uName;
-//                     delete values.uName;
-//                     const code = await state.forgetPwdData( values );
-//                     if( code === 200 ){
-//                         this.setState({
-//                             code: 2
-//                         });
-//                     }
-//                 }
-//             });
-//         }else if( that === 'submit' ){
-//             this.props.form.validateFields(async (err, values) => {
-//                 if (!err) {
-//                     const { uPwd, confirm } = values || {};
-//                     if( uPwd != confirm ) {                        
-//                         message.error('新密码和确认密码不一致！');
-//                     }else{
-//                         let newUpwd = this.$md5( values.confirm + PWD_KEY );
-//                         const code = await state.newPwdData({ newUpwd });
-//                         if( code === 200 ){
-//                             this.setState({
-//                                 code: 0
-//                             });
-//                         }
-//                     }
-//                 }
-//             });
-//         }else{
-//             this.setState({
-//                 code: 0
-//             });
-//         }
-//     }
-
-//     componentWillUnmount() {
-//         state.clearMobxData();
-//     }
-
-//     render() {
-//         const { code } = this.state;
-//     }
-// }
-
-export default ({ setIsFooter=()=>{}, setIsHeader=()=>{}, _md5, _service, _key, history, _globalCloseTime }) => {
+export default ({ setIsFooter=()=>{}, setIsHeader=()=>{}, _md5, _service, _key, history, _globalCloseTime, _validatePhone }) => {
     const [code, setCode] = useState(0);
+    const [params, setParams] = useState({});
 
     useEffect(() => {        
         // 隐藏头部、底部组件
@@ -118,12 +35,43 @@ export default ({ setIsFooter=()=>{}, setIsHeader=()=>{}, _md5, _service, _key, 
         }
     }, [])
 
-    // 登录
-    const handleLoginBtn = (values) => {
-        values.upwd = _md5(values.upwd + _key);
-        // 0不记住密码， 1表示记住密码
-        values.isRemember = Number(values.isRemember);
-        service('postLogData', _service, history, _globalCloseTime)(values);
+    // 登录、验证信息、直接登录
+    const handleLoginBtn = (key) => {
+        let obj = {
+            changeCode(num) {
+                setCode(num);
+            },
+            login(values = {}) {
+                values.upwd = _md5(values.upwd + _key);
+                // 0不记住密码， 1表示记住密码
+                values.isRemember = Number(values.isRemember);
+                service('postLogData', _service)(values).then(code => {
+                    if( code == 200 ) {                        
+                        setTimeout(() => {
+                            history.push('/home');
+                        }, _globalCloseTime * 800);
+                    }
+                });
+            },
+            validInfo(values = {}) {
+                service('postValiForgetPwdData', _service)(values).then(data => {
+                    if(data) {
+                        setCode(2);
+                        setParams(data);
+                    }
+                });
+            },
+            submitNewPwd(values = {}) {
+                service('postUpdateUpwdData', _service)({
+                    newUpwd: _md5(values.confirm + _key),
+                    ...params,
+                    isForgetPwd: true
+                }).then(code => code == 200 && setCode(0));
+            }
+        };
+        return function() {
+            typeof obj[key] === 'function' && obj[key].apply(this, arguments);
+        }
     };
 
     return (
@@ -134,30 +82,13 @@ export default ({ setIsFooter=()=>{}, setIsHeader=()=>{}, _md5, _service, _key, 
                 </Link>
             </div>
             <div className='content' style={ loginBg }>
-                <LoginComponents 
-                    // form={ this.props.form } 
-                    // handleTarget={ this.handleTarget }  
-                    handleLoginBtn={ handleLoginBtn }
-                />
-                {/* {
-                    code === 0 ? (
-                        <Logins 
-                            form={ this.props.form } 
-                            handleTarget={ this.handleTarget }  
-                            loginSubmit={ this.loginSubmit }
-                        />
-                    ) : code === 1 ? (
-                        <ForgetPassword 
-                            form={ this.props.form } 
-                            handleTarget={ this.handleTarget }  
-                        />
-                    ) : code === 2 ? (
-                        <NewPassword 
-                            form={ this.props.form } 
-                            handleTarget={ this.handleTarget } 
-                        />
-                    ) : ''
-                } */}
+                {
+                    [
+                        <LoginComponents handleLoginBtn={ handleLoginBtn('login') } changeCode={ handleLoginBtn('changeCode') } />,
+                        <ForgetPwdComponents handleLoginBtn={ handleLoginBtn('validInfo') } changeCode={ handleLoginBtn('changeCode') } _validatePhone={ _validatePhone } />,
+                        <NewPwdComponents handleLoginBtn={ handleLoginBtn('submitNewPwd') } changeCode={ handleLoginBtn('changeCode') } />
+                    ][code]
+                }
             </div>
         </div>
     );

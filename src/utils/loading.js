@@ -22,14 +22,18 @@ const showLoading = () => {
 }
 
 // 隐藏loading
-const hideLoading = () => {
-    setTimeout(() => {
-        reqCount--;
+const hideLoading = (func) => {
     
+    setTimeout(() => {
+        reqCount--;    
         if(!reqCount) {
             document.body.removeChild(document.getElementById('dm_loading'));
         }
-    }, ($globalCloseTime + 1) * 500)
+    }, 500)
+    
+    setTimeout(() => {
+        typeof func === 'function' && func();
+    }, 500)
 
 }
 

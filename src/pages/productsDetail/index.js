@@ -33,7 +33,7 @@ export default (props) => {
     const { id } = useParams() || {};
 
     useEffect(() => {
-        getDetailsData({ id })(props._service).then(({ basicInfo, imgList, params, specs, detailsPic }) => {
+        getDetailsData(props._service, { id }).then(({ basicInfo, imgList, params, specs, detailsPic }) => {
             setBasicInfo(basicInfo);
             setImgList(imgList);
             setParams(params);

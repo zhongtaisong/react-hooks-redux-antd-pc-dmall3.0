@@ -6,6 +6,8 @@ import { message } from 'antd';
 import { HeaderBar, FooterBar } from '@com';
 // 全局设置
 import { $url, $key, $globalCloseTime } from '@config';
+// 全局公共方法
+import { validatePhone, $ellipsis } from '@utils';
 // 路由
 import routes from './router';
 // 接口服务
@@ -25,12 +27,6 @@ const ScrollTop = ({ children }) => {
 
     return children;
 }
-
-// 超出指定行内容溢出，则显示省略号...
-const $ellipsis = (value, len) => {
-    if( !value.trim() ) return '';
-    return value.length >= len ? `${value.slice(0, len)}...` : value;
-};
 
 export default () => {
 
@@ -84,7 +80,7 @@ export default () => {
                         {
                             routes.map((item, index) => {
                                 return (
-                                    <Route key={ index } path={ item.path } exact={ item.exact } render={ props => <item.component {...props} setIsHeader={ setIsHeader } setIsFooter={ setIsFooter } _url={ $url } _key={ $key } _ellipsis={ $ellipsis } _service={ service } _md5={ md5 } _globalCloseTime={ $globalCloseTime } /> } />
+                                    <Route key={ index } path={ item.path } exact={ item.exact } render={ props => <item.component {...props} setIsHeader={ setIsHeader } setIsFooter={ setIsFooter } _url={ $url } _key={ $key } _ellipsis={ $ellipsis } _service={ service } _md5={ md5 } _globalCloseTime={ $globalCloseTime } _validatePhone={ validatePhone } /> } />
                                 );
                             })
                         }

@@ -45,7 +45,7 @@ export default ({ history, _url, _service }) => {
     return (
         <div className='dm_carousel common_width'>
             <div className='dm_carousel__top'>
-                <Carousel autoplay effect="fade">
+                <Carousel autoplay>
                     {
                         carouselList.map( item => {
                             return (

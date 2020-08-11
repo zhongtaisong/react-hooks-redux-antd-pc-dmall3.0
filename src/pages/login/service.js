@@ -1,4 +1,4 @@
-export default (key, _service, history, _globalCloseTime) => {
+export default (key, _service) => {
     let obj = {
         // 登录
         async postLogData(params = {}) {
@@ -12,11 +12,8 @@ export default (key, _service, history, _globalCloseTime) => {
 
                     sessionStorage.setItem('uname', uname);
                     localStorage.setItem('uname', uname);
-
-                    // setTimeout(() => {
-                    //     history.push('/home');
-                    // }, _globalCloseTime * 500);
                 }
+                return res.data.code;
             }catch(err) {
                 console.log(err);
             }
@@ -26,13 +23,8 @@ export default (key, _service, history, _globalCloseTime) => {
             const res = await _service.postValiForgetPwdData(params);
             try{
                 if( res.data.code === 200 ){
-                    // const { data={} } = res.data || {};
-                    // if(data) {
-                    //     this.setUpwdObj(data);
-                    // }
-                    // message.success(res.data.msg);
+                    return res.data.data || {};
                 }
-                // return res.data.code;
             }catch(err) {
                 console.log(err);
             }
@@ -42,10 +34,9 @@ export default (key, _service, history, _globalCloseTime) => {
             const res = await _service.postUpdateUpwdData(params);
             try{
                 if( res.data.code === 200 ){
-                    // message.success('新密码提交成功！');
-                    // res.data.data && localStorage.setItem('uname', res.data.data);      
+                    res.data.data && localStorage.setItem('uname', res.data.data);
                 }
-                // return res.data.code;
+                return res.data.code;
             }catch(err) {
                 console.log(err);
             }
@@ -53,6 +44,6 @@ export default (key, _service, history, _globalCloseTime) => {
     }
 
     return (...params) => {
-        typeof obj[key] === 'function' && obj[key](...params);
+        return typeof obj[key] === 'function' && obj[key](...params);
     }
 }

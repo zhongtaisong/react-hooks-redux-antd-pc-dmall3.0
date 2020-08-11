@@ -1,10 +1,10 @@
 import React from 'react';
-import { Form, Input, Button, Checkbox, Row, Col, Divider } from 'antd';
+import { Form, Input, Button, Checkbox, Row, Col } from 'antd';
 import { Link } from 'react-router-dom';
 import { UserOutlined, LockOutlined } from '@ant-design/icons';
 
 // --------------------------------------- 登录 --------------------------------- //
-export default ({ handleLoginBtn=()=>{} }) => {
+export default ({ handleLoginBtn, changeCode }) => {
 
     // 完成表单
     const onFinish = values => {
@@ -67,7 +67,7 @@ export default ({ handleLoginBtn=()=>{} }) => {
                 </Col>
                 <Col span={ 12 } style={{ textAlign: 'right' }}>
                     <Form.Item>
-                        <a>忘记密码？</a>
+                        <a onClick={ () => typeof changeCode === 'function' && changeCode(1) } >忘记密码？</a>
                     </Form.Item>            
                 </Col>
             </Row>

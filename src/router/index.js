@@ -3,6 +3,8 @@ import Products from '@pages/products';
 import ProductsDetail from '@pages/productsDetail';
 import ShoppingCart from '@pages/shoppingCart';
 import Login from '@pages/login';
+import Register from '@pages/register';
+import SearchResults from '@pages/searchResults';
 // import SettlementPage from '@pages/SettlementPage';
 // import OrderDetails from '@pages/OrderDetails';
 // import MyCollection from '@pages/MyCollection';
@@ -47,22 +49,16 @@ export default [
         component: Login,
         title: '登录'
     },
-    // { 
-    //     id: 6,
-    //     path: '/views/cart',
-    //     name: 'MyShoppingCart',
-    //     component: MyShoppingCart,
-    //     title: '我的购物车',
-    //     noDirectAccess: true
-    // },
-    // { 
-    //     id: 7,
-    //     path: '/views/order',
-    //     name: 'MyOrder',
-    //     component: MyOrder,
-    //     title: '我的订单',
-    //     noDirectAccess: true
-    // },
+    {
+        path: '/register',
+        component: Register,
+        title: '注册'
+    },
+    {
+        path: '/products/searchResults/:kws',
+        component: SearchResults,
+        title: '搜索结果'
+    },
     // { 
     //     id: 8,
     //     path: '/views/collection',

@@ -73,7 +73,7 @@ export default () => {
         <div className="dm_app">
             <HashRouter basename='/dm'>
                 {
-                    isHeader ? (<HeaderBar />) : ''
+                    isHeader ? (<HeaderBar _service={ service } />) : ''
                 }                
                 <ScrollTop>
                     <Switch>

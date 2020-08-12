@@ -1,14 +1,11 @@
-import axios from 'axios';
 import $axios from './axios';
 
 export default class Http {
 
     static request( method='get', url, data={} ) {
-        return $axios({
-            method, url, 
-            data: method == 'get' ? {
-                params: {...data}
-            } : data
+        return $axios({ 
+            method, url,
+            [method == 'get' ? 'params' : 'data']: data
         }).then(res => {
             return this.isSuccess(res);
         })
@@ -16,7 +13,7 @@ export default class Http {
 
     // 判断请求是否成功
     static isSuccess(res) {
-        if (res.data && res.data.code == 200) {
+        if (res.data && [200, 201].includes(res.data.code)) {
             return res || {};
         } else {
             this.requestException(res);

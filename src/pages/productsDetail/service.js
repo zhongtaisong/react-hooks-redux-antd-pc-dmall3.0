@@ -1,5 +1,5 @@
 // 获取 - 商品详情
-export const getDetailsData = async (obj={}, _service) => {
+export const getDetailsData = (_service) => (async (obj={}) => {
     const res = await _service.getDetailsData(obj);
     try{
         if( res.data.code === 200 ){
@@ -9,4 +9,4 @@ export const getDetailsData = async (obj={}, _service) => {
     }catch(err) {
         console.log(err);
     }
-}
+})

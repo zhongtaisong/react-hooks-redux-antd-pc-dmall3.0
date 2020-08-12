@@ -29,6 +29,6 @@ export default (key, _service) => {
         }
     }
     return function() {
-        return typeof obj[key] === 'function' && obj[key].apply(this, ...arguments);
+        return typeof obj[key] === 'function' && obj[key].apply(this, arguments);
     }
 }

@@ -92,7 +92,7 @@ export default ({ history, _url, _ellipsis, _service }) => {
             }
         };
         return function() {
-            typeof obj[_this] === 'function' && obj[_this].apply(this, ...arguments);
+            typeof obj[_this] === 'function' && obj[_this].apply(this, arguments);
         };
     }
 

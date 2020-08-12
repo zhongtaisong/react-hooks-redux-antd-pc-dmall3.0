@@ -18,6 +18,13 @@ const logoBg = {
 // ------------------------------------------------- 导航菜单 ------------------------------------ //
 export default () => {
     const history = useHistory();
+
+    // 监听输入关键字
+    const handleSearchKw = (value, e) => {
+        if( !value.trim() ) return message.warning('请输入您要搜索的商品！');
+        history.push(`/products/searchResults/${value}`);
+    }
+    
     return (        
         <div className='dm_headerBar_search'>
             <Row className='common_width'>
@@ -28,7 +35,7 @@ export default () => {
                     <NavLink activeClassName='active' to='/a'>留言</NavLink>
                 </Col>
                 <Col span={ 9 }>
-                    <Input.Search placeholder="搜索商品" style={{ paddingRight: '10px' }} enterButton />
+                    <Input.Search placeholder="搜索商品" style={{ paddingRight: '10px' }} enterButton onSearch={ handleSearchKw } />
                     <Badge showZero count={ 66 } overflowCount={ 99 }>
                         <Button icon={<ShoppingCartOutlined />} type="primary" className='dm_headerBar_search__cart' 
                             onClick={ () => history.push('/products/cart') }

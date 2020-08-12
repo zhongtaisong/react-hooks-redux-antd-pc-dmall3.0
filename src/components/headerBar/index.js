@@ -8,11 +8,11 @@ import Search from './components/search';
 import './index.less';
 
 // --------------------------- 顶部导航 ------------------------------ //
-export default () => {
+export default (props) => {
     return (
         <div className='dm_headerBar'>
             <Anchor>
-                <Top />
+                <Top {...props} />
                 <Search />
             </Anchor>
         </div>

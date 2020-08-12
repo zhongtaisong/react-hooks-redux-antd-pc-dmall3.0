@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useParams, useLocation, useHistory } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 // 接口服务
 import { getDetailsData } from './service';
 // 上半部分 - 组件
@@ -33,7 +33,7 @@ export default (props) => {
     const { id } = useParams() || {};
 
     useEffect(() => {
-        getDetailsData(props._service, { id }).then(({ basicInfo, imgList, params, specs, detailsPic }) => {
+        getDetailsData(props._service)({ id }).then(({ basicInfo, imgList, params, specs, detailsPic }) => {
             setBasicInfo(basicInfo);
             setImgList(imgList);
             setParams(params);
@@ -86,7 +86,7 @@ export default (props) => {
             }
         }
         return function() {
-            typeof obj[_this] === 'function' && obj[_this].apply(this, ...arguments);
+            typeof obj[_this] === 'function' && obj[_this].apply(this, arguments);
         }
     }
 
@@ -99,7 +99,7 @@ export default (props) => {
             }
         };
         return function() {
-            typeof obj[_this] === 'function' && obj[_this].apply(this, ...arguments);
+            typeof obj[_this] === 'function' && obj[_this].apply(this, arguments);
         }
     }
     
@@ -107,6 +107,7 @@ export default (props) => {
         <div className='dm_productsDetail'>
             <div className='common_width'>
                 <TopSpecification 
+                    {...props}
                     basicInfo={ basicInfo }
                     imgList={ imgList }
                     specs={ specs }
@@ -119,6 +120,7 @@ export default (props) => {
                     handleAddCart={ handleTopSpecification('handleAddCart') }
                 />
                 <BottomDetails 
+                    {...props}
                     params={ params }
                     detailsPic={ detailsPic }
                 />

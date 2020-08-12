@@ -1,18 +1,12 @@
-import axios from '@axios';
 // 退出登录
-const logoutUrl = `users/logout`;
-
-class Service {
-    
-    logoutData = (req = {}) => {
-        return new Promise((resolve, reject) => {
-            axios.post(logoutUrl, req).then(res => {
-                resolve(res);
-            }).catch(err => {
-                console.log(err);
-            });
-        })
+export const postLogoutData = (_service) => (async () => {
+    const res = await _service.postLogoutData();
+    try{
+        if( res.data.code === 200 ){
+            sessionStorage.removeItem('uname');
+        }
+        return res.data.code;
+    }catch(err) {
+        console.log(err);
     }
-}
-
-export default new Service();
+})

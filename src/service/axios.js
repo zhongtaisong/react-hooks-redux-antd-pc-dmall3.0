@@ -68,11 +68,11 @@ $axios.interceptors.request.use(
 // 添加响应拦截器
 $axios.interceptors.response.use(
     response => {
-        const { data={}, config={} } = response || {};
+        const { data={} } = response || {};
 
         if( data ){
             loading.hideLoading(() => {
-                data.msg && message.success(data.msg, $globalCloseTime);
+                data.code == 200 && data.msg && message.success(data.msg, $globalCloseTime);
             });            
         }
         return response;

@@ -6,11 +6,12 @@ export default (key, _service) => {
             const res = await _service.postLogData(params);
             try{
                 if( res.data.code === 200 ){
-                    const { uname } = res.data.data || {};
+                    const { uname, token } = res.data.data || {};
 
-                    if(!uname) return res.data;
+                    if(!uname || !token) return res.data;
 
                     sessionStorage.setItem('uname', uname);
+                    sessionStorage.setItem('token', token);
                     localStorage.setItem('uname', uname);
                 }
                 return res.data.code;

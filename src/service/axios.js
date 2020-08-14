@@ -48,7 +48,7 @@ $axios.interceptors.request.use(
         // token
         let token = sessionStorage.getItem('token');
         const headers = {
-            type: 'vue'
+            type: 'hooks'
         };
         if(uname) {
             headers['uname'] = uname;

@@ -13,8 +13,8 @@ export default ({ _service }) => {
     const [isShow, setIsShow] = useState(false);
 
     useEffect(() => {
-        setIsShow(sessionStorage.getItem('uname') && localStorage.getItem('uname') && sessionStorage.getItem('uname') == localStorage.getItem('uname'));
-    }, [sessionStorage.getItem('uname'), localStorage.getItem('uname')])
+        setIsShow(sessionStorage.getItem('uname') && sessionStorage.getItem('token'));
+    }, [sessionStorage.getItem('uname'), sessionStorage.getItem('token')])
 
     // 退出登录
     const hanleLoginOut = () => {
@@ -32,7 +32,7 @@ export default ({ _service }) => {
                     {
                         isShow ? (
                             <>
-                                <span>欢迎你，{ localStorage.getItem('uname') }</span>
+                                <span>欢迎你，{ sessionStorage.getItem('uname') }</span>
                                 <a onClick={ hanleLoginOut }>退出登录</a>
                             </>
                         ) : (

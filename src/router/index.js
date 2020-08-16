@@ -5,7 +5,7 @@ import ShoppingCart from '@pages/shoppingCart';
 import Login from '@pages/login';
 import Register from '@pages/register';
 import SearchResults from '@pages/searchResults';
-// import SettlementPage from '@pages/SettlementPage';
+import MyCollection from '@pages/myCollection';
 // import OrderDetails from '@pages/OrderDetails';
 // import MyCollection from '@pages/MyCollection';
 // import MyEvaluation from '@pages/MyEvaluation';
@@ -59,14 +59,11 @@ export default [
         component: SearchResults,
         title: '搜索结果'
     },
-    // { 
-    //     id: 8,
-    //     path: '/views/collection',
-    //     name: 'MyCollection',
-    //     component: MyCollection,
-    //     title: '我的收藏',
-    //     noDirectAccess: true
-    // },
+    {
+        path: '/products/collection',
+        component: MyCollection,
+        title: '我的收藏'
+    },
     // { 
     //     id: 9,
     //     path: '/views/user',

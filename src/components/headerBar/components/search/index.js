@@ -16,7 +16,7 @@ const logoBg = {
 };
 
 // ------------------------------------------------- 导航菜单 ------------------------------------ //
-export default () => {
+export default ({ productNum }) => {
     const history = useHistory();
 
     // 监听输入关键字
@@ -36,7 +36,7 @@ export default () => {
                 </Col>
                 <Col span={ 9 }>
                     <Input.Search placeholder="搜索商品" style={{ paddingRight: '10px' }} enterButton onSearch={ handleSearchKw } />
-                    <Badge showZero count={ 66 } overflowCount={ 99 }>
+                    <Badge showZero count={ productNum } overflowCount={ 99 }>
                         <Button icon={<ShoppingCartOutlined />} type="primary" className='dm_headerBar_search__cart' 
                             onClick={ () => history.push('/products/cart') }
                         >我的购物车</Button>

@@ -1,9 +1,10 @@
 import React from 'react';
-import { InputNumber, Popconfirm } from 'antd';
-import { QuestionCircleOutlined } from '@ant-design/icons';
+import { InputNumber } from 'antd';
 import { Link } from 'react-router-dom';
+// 全局公共组件
+import { Popconfirm } from '@com';
 
-export const columns = (_url) => {
+export const columns = (_url, handleCollection) => {
     return (
         [
             {
@@ -66,25 +67,14 @@ export const columns = (_url) => {
                 dataIndex: 'operation',
                 key: 'operation',
                 align: 'center',
-                // fixed: 'right',
                 width: '148px',
                 render: (text, record, index) => {
                     return (              
                         <div className='operation'>
-                            <Popconfirm
-                                title="你确定要删除这条数据？"
-                                icon={<QuestionCircleOutlined style={{ color: 'red' }} />}
-                                onConfirm={() => {
-                                    // state.delcartData( [record.id] );
-                                }}
-                                okText="是"
-                                cancelText="否"
-                            >
+                            <Popconfirm title="你确定要删除这条数据？">
                                 <span>删除</span>
                             </Popconfirm>
-                            <span onClick={() => {
-                                // state.addcolsData( [ record.id ], [ record ] );
-                            }}>加入收藏</span>
+                            <span onClick={ () => typeof handleCollection === 'function' && handleCollection([record.id]) }>加入收藏</span>
                         </div>
                     );
                 }

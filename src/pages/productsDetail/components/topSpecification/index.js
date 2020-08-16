@@ -1,14 +1,31 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, useState } from 'react';
 import { Row, Col, Typography, InputNumber, Button, Tooltip } from 'antd';
+// 接口服务
+import { postAddCartData } from './service';
 // less样式
 import './index.less';
 
 const { Title, Paragraph } = Typography;
 // ------------------------------------------- 商品详情 - 规格 ---------------------------------- //
 export default ({ 
-    basicInfo={}, imgList=[], specs=[], handleTogglePic=()=>{}, actionIndex, handleToggleSpecs=()=>{}, watchNumber=()=>{},
-    immediatePurchase=()=>{}, handleAddCart=()=>{}, num=1, _url
+    basicInfo={}, imgList=[], specs=[], handleTogglePic=()=>{}, actionIndex, handleToggleSpecs=()=>{},
+    immediatePurchase=()=>{}, _url, getCartNumData, _service
 }) => {
+    // 商品数量
+    const [num, setNum] = useState(1);
+
+    // 加入购物车
+    const handleAddCart = () => {
+        postAddCartData(_service)([{
+            pid: basicInfo.id,
+            num,
+            totalprice: (Number(basicInfo.price) || 0) * num
+        }]).then(res => {
+            const { code } = res.data || {};
+            code == 200 && getCartNumData();
+        })
+    }
+
     return (
         <div className='CommoditySpecification'>
             <Row>
@@ -73,14 +90,14 @@ export default ({
                     <Row className='Number'>
                         <Col span={ 2 }>数量：</Col>
                         <Col span={ 22 }>
-                            <InputNumber min={ 1 } max={ 99 } value={ num } precision={ 0 } onChange={ watchNumber } />
+                            <InputNumber min={ 1 } max={ 99 } value={ num } precision={ 0 } onChange={ (value) => setNum(value) } />
                         </Col>
                     </Row>
                     <Row className='handleButton'>
                         <Col span={ 2 }></Col>
                         <Col span={ 22 }>
                             <Button type="primary" size='large' ghost onClick={ immediatePurchase }>立即购买</Button>
-                            <Button type="primary" size='large' onClick={ handleAddCart }>加入购物车</Button>
+                            <Button type="primary" size='large' onClick={ handleAddCart } >加入购物车</Button>
                         </Col>
                     </Row>
                 </Col>

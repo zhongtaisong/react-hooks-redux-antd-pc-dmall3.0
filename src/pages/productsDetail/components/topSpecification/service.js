@@ -1,17 +1,10 @@
-import axios from '@axios';
-// 加入购物车
-const addcartUrl = 'cart/add';
-
-class Service {    
-    addcartData = (req = {}) => {
-        return new Promise((resolve, reject) => {
-            axios.post(addcartUrl, req).then(res => {
-                resolve(res);
-            }).catch(err => {
-                console.log(err);
-            });
+// 加入购物车 - 数据
+export const postAddCartData = (_service) => (
+    async (list = []) => {
+        const res = await _service.postAddCartData({
+            uname: sessionStorage.getItem('uname'), 
+            list
         });
+        return res || {};
     }
-}
-
-export default new Service();
+);

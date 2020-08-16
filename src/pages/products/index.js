@@ -13,7 +13,7 @@ const { Title } = Typography;
 // 一页展示多少条数据
 const SIZE = 10;
 // ------------------------------------------------- 杂货铺 -------------------------------- //
-export default ({ history, _url, _ellipsis, _service }) => {
+export default ({ history, _url, _ellipsis, _service, getCartNumData }) => {
     // 字典表
     const tableDic = JSON.parse(sessionStorage.getItem('tableDic') || '{}');
     // 筛选条件 - 列表
@@ -30,6 +30,8 @@ export default ({ history, _url, _ellipsis, _service }) => {
     const [pageSize, setPageSize] = useState(SIZE);
     // 数据总数
     const [total, setTotal] = useState(SIZE);
+    // 存储 - 加入购物车 - 数量
+    const [numObj, setNumObj] = useState({});
 
     useEffect(() => {
         service('getFilterData', _service)().then(data => {
@@ -98,9 +100,7 @@ export default ({ history, _url, _ellipsis, _service }) => {
 
     // 监听 - 页码变化
     const handlePageChange = (page) => {
-
         setCurrent(page);
-
         service('getProductsData', _service)({
             current: page,
             pageSize,
@@ -111,10 +111,27 @@ export default ({ history, _url, _ellipsis, _service }) => {
             setPageSize(pageSize);
             setTotal(total);
         });
-        
-        // this.setState({
-        //     numObj: {}
-        // });
+    }
+
+    // 监听数量
+    const watchNumber = (key, value) => {
+        const _numObj = {...numObj};
+        _numObj[key] = value;
+        setNumObj(_numObj);
+    }
+
+    // 加入购物车
+    const handleAddCart = (item={}, key) => {
+        if( !Object.keys(item).length ) return;
+        const _num = numObj[key] || 1;
+        service('postAddCartData', _service)([{
+            pid: item.id,
+            num: numObj[key] || 1,
+            totalprice: Number(item.price) * _num
+        }]).then(res => {
+            const { code } = res.data || {};
+            code == 200 && getCartNumData();
+        });
     }
 
     return (
@@ -165,11 +182,11 @@ export default ({ history, _url, _ellipsis, _service }) => {
                                                     />
                                                 }
                                                 actions={[
-                                                    <InputNumber min={ 1 } max={ 99 } value={ 1 } 
-                                                        // onChange={ this.watchNumber.bind(this, `num${item.key}`) } 
+                                                    <InputNumber min={ 1 } max={ 99 } value={ numObj[`${item.key}_${current}`] || 1 } 
+                                                        onChange={ (value) => watchNumber(`${item.key}_${current}`, value) } 
                                                     />,
                                                     <Button type="primary" ghost 
-                                                        // onClick={ this.handleAddCart.bind(this, item, `num${item.key}`) }
+                                                        onClick={ () => handleAddCart(item, `${item.key}_${current}`) }
                                                     >加入购物车</Button>
                                                 ]}
                                             >

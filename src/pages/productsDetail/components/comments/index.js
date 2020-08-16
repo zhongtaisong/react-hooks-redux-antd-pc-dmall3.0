@@ -1,13 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { Comment, Avatar, Empty } from 'antd';
-import { LikeOutlined, DislikeOutlined } from '@ant-design/icons';
+import { LikeFilled, LikeOutlined, DislikeFilled, DislikeOutlined } from '@ant-design/icons';
 // 接口服务
-import { getCurrentCommentData, postUpdateCommentData } from './service';
+import service from './service';
 // less样式
 import './index.less';
 // ------------------------------------------------------ 商品评价 ---------------------------------- //
-export default ({ pid, _url }) => {
-
+export default ({ pid, _url, _service }) => {
     // 评价列表
     const [commentList, setCommentList] = useState([]);
     // 赞、踩 - 数量
@@ -16,29 +15,38 @@ export default ({ pid, _url }) => {
     const [action, setAction] = useState({});
 
     useEffect(() => {
-        getCurrentCommentData({ pid }).then(({ data, nums }) => {
+        getCurrentCommentData();
+    }, [pid]);
+
+    // 重新获取评论列表 - 数据
+    const getCurrentCommentData = () => {
+        service('getCurrentCommentData', _service)({ pid }).then(({ data, nums }) => {
             setCommentList(data);
             setNums(nums);
         });
-    }, [pid]);
+    }
 
-    // 喜欢 / 不喜欢
-    const handleLike = (type, index, item={}) => {
+    // 赞 / 踩
+    const handleLike = (type, id, item={}) => {
+        const _action = {...action};
+        if( _action[id] == type ) return;
 
-        const { id } = item;
+        if( _action[id] && _action[id] != type ) {
+            item[_action[id]]--;
+        }
 
-        action[index] = type;
-        setAction(action);
+        _action[id] = type;
+        setAction(_action);
+        item[type]++;
 
-        commentList.map(_item => {
-            if(_item[type] == item[type]) {
-                _item[type]++;
-                postUpdateCommentData({
-                    id, type, agreeNum: _item.agree, disagreeNum: _item.disagree
-                });
-            }
-        })
-        setCommentList(commentList);
+        service('postUpdateCommentData', _service)({ 
+            id, type, 
+            agreeNum: item['agree'], 
+            disagreeNum: item['disagree'] 
+        }).then(res => {
+            const { code } = res.data || {};
+            code == 200 && getCurrentCommentData();
+        });
     }
 
     return (
@@ -47,18 +55,22 @@ export default ({ pid, _url }) => {
                 commentList.length ? (
                     <>
                         {
-                            commentList.map((item, index) => {
+                            commentList.map(item => {
                                 return (
                                     <Comment
                                         key={ item.id }
                                         actions={ [
                                             <span key="comment-basic-agree">
-                                                <LikeOutlined theme={ action[index] === 'agree' ? 'filled' : 'outlined' } onClick={ handleLike.bind(this, 'agree', index, item) } />
-                                                <span style={{ paddingLeft: 8, cursor: 'auto' }}>{ item.agree }</span>
+                                                <a onClick={ () => handleLike('agree', item.id, item) }>
+                                                    { action[item.id] === 'agree' ? <LikeFilled /> : <LikeOutlined /> }
+                                                </a>
+                                                <span style={{ paddingLeft: 4, cursor: 'auto' }}>{ item.agree }</span>
                                             </span>,
                                             <span key="comment-basic-disagree">
-                                                <DislikeOutlined theme={ action[index] === 'disagree' ? 'filled' : 'outlined' } onClick={ handleLike.bind(this, 'disagree', index, item) } />
-                                                <span style={{ paddingLeft: 8, cursor: 'auto' }}>{ item.disagree }</span>
+                                                <a onClick={ () => handleLike('disagree', item.id, item) }>
+                                                    { action[item.id] === 'disagree' ? <DislikeFilled /> : <DislikeOutlined /> }
+                                                </a>
+                                                <span style={{ paddingLeft: 4, cursor: 'auto' }}>{ item.disagree }</span>
                                             </span>
                                         ] }
                                         author={ item.uname }

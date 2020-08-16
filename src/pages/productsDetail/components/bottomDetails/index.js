@@ -26,7 +26,7 @@ const _info = [
     { id: 16, label: '显存容量', key: 'gpuCapacity', value: '' },
     { id: 17, label: '机身材质', key: 'bodyMaterial', value: '' }
 ];
-export default ({ params={}, detailsPic=[], _url }) => {
+export default ({ params={}, detailsPic=[], _url, ...rest }) => {
 
     // 字典表
     const tableDic = JSON.parse(sessionStorage.getItem('tableDic') || '{}');
@@ -70,7 +70,7 @@ export default ({ params={}, detailsPic=[], _url }) => {
                     </Row>
                 </TabPane>
                 <TabPane tab={ <span className='tab_title'>商品评价</span> } key={ 2 } >
-                    <Comments pid={ params.id || '' } />
+                    <Comments {...rest} pid={ params.id || '' } />
                 </TabPane>
             </Tabs>
         </div>

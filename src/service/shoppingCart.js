@@ -10,7 +10,7 @@ export const postDeleteCartData = (data = {}) => {
     return Http.post('cart/delete', data);
 }
 
-// 发送 - 加入收藏 - 数据
+// 发送 - 加入收藏 / 加入购物车 - 数据
 export const postAddCollectionData = (data = {}) => {
     return Http.post('collection/add', data);
 }

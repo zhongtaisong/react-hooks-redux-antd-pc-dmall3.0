@@ -43,7 +43,7 @@ export default ({ _service }) => {
                         )
                     }
                     <Link to='/'>我的订单</Link>
-                    <Link to='/'>我的收藏</Link>
+                    <Link to='/products/collection'>我的收藏</Link>
                     <Link to='/'>用户中心</Link>
                 </Col>
             </Row>

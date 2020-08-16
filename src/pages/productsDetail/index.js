@@ -6,8 +6,6 @@ import { getDetailsData } from './service';
 import TopSpecification from './components/topSpecification';
 // 下半部分 - 组件
 import BottomDetails from './components/bottomDetails';
-// 数据
-// import indexState from './state';
 // 样式
 import './index.less';
 
@@ -26,8 +24,6 @@ export default (props) => {
     const [detailsPic, setDetailsPic] = useState([]);
     // 待预览图片索引
     const [actionIndex, setActionIndex] = useState(0);
-    // 商品数量
-    const [num, setNum] = useState(1);
     // tab索引
     const [activeKey, setActiveKey] = useState(1);
     const { id } = useParams() || {};
@@ -53,14 +49,9 @@ export default (props) => {
             handleToggleSpecs(id) {
                 if( id ){
                     props.history.push(`/products/detail/${id}`);
-                    setNum(1);
                     setActionIndex(0)
                     setActiveKey(1);
                 }
-            },
-            // 监听 - 商品数量
-            watchNumber(value) {
-                setNum(value);
             },
             // 立即购买
             immediatePurchase() {
@@ -73,16 +64,6 @@ export default (props) => {
                 //         type: 'detail'
                 //     }
                 // });
-            },
-            // 加入购物车
-            handleAddCart() {
-                if( basicInfo ){
-                    // state.addcartData([{
-                    //     pid: basicInfo.id,
-                    //     num: this.state.num,
-                    //     totalprice: basicInfo.price ? Number(basicInfo.price) * this.state.num : basicInfo.price
-                    // }]);
-                }
             }
         }
         return function() {
@@ -112,12 +93,9 @@ export default (props) => {
                     imgList={ imgList }
                     specs={ specs }
                     actionIndex={ actionIndex }
-                    num={ num }
                     handleTogglePic={ handleTopSpecification('handleTogglePic') }
                     handleToggleSpecs={ handleTopSpecification('handleToggleSpecs') }
-                    watchNumber={ handleTopSpecification('watchNumber') }
                     immediatePurchase={ handleTopSpecification('immediatePurchase') }
-                    handleAddCart={ handleTopSpecification('handleAddCart') }
                 />
                 <BottomDetails 
                     {...props}

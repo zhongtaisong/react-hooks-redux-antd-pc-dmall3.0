@@ -32,11 +32,14 @@ export default () => {
 
     const [isHeader, setIsHeader] = useState(true);
     const [isFooter, setIsFooter] = useState(true);
+    const [productNum, setProductNum] = useState(0);
 
     useEffect(() => {
         getDicData();
+        getCartNumData();
     }, [])
 
+    // 查字典表
     const getDicData = async () => {
         const res = await service.getDicData();
         try {
@@ -68,19 +71,48 @@ export default () => {
             console.log(error);
         }
     }
+
+    // 查询购物车商品数量
+    const getCartNumData = async () => {
+        try {
+            const res = await service.getCartNumData({
+                uname: sessionStorage.getItem('uname')
+            });
+            if( res.data.code == 200 ) {
+                setProductNum(res.data.data || 0);
+            }
+        } catch (error) {
+            console.log(error);
+        }
+    };
     
     return (
         <div className="dm_app">
             <HashRouter basename='/dm'>
                 {
-                    isHeader ? (<HeaderBar _service={ service } />) : ''
+                    isHeader ? (<HeaderBar _service={ service } productNum={ productNum } />) : ''
                 }                
                 <ScrollTop>
                     <Switch>
                         {
                             routes.map((item, index) => {
                                 return (
-                                    <Route key={ index } path={ item.path } exact={ item.exact } render={ props => <item.component {...props} setIsHeader={ setIsHeader } setIsFooter={ setIsFooter } _url={ $url } _key={ $key } _ellipsis={ $ellipsis } _service={ service } _md5={ md5 } _globalCloseTime={ $globalCloseTime } _validatePhone={ validatePhone } /> } />
+                                    <Route key={ index } path={ item.path } exact={ item.exact } 
+                                        render={ 
+                                            props => <item.component {...props} 
+                                                setIsHeader={ setIsHeader } 
+                                                setIsFooter={ setIsFooter } 
+                                                _url={ $url } 
+                                                _key={ $key } 
+                                                _ellipsis={ $ellipsis } 
+                                                _service={ service } 
+                                                _md5={ md5 } 
+                                                _globalCloseTime={ $globalCloseTime } 
+                                                _validatePhone={ validatePhone } 
+                                                getCartNumData={ getCartNumData }
+                                            /> 
+                                        } 
+                                    />
                                 );
                             })
                         }

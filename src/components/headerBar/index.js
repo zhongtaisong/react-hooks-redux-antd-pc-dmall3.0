@@ -13,7 +13,7 @@ export default (props) => {
         <div className='dm_headerBar'>
             <Anchor>
                 <Top {...props} />
-                <Search />
+                <Search {...props} />
             </Anchor>
         </div>
     )

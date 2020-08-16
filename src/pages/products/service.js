@@ -26,6 +26,14 @@ export default (key, _service) => {
             }catch(err) {
                 console.log(err);
             }
+        },
+        // 加入购物车 - 数据
+        async postAddCartData(list = []) {
+            const res = await _service.postAddCartData({
+                uname: sessionStorage.getItem('uname'), 
+                list
+            });
+            return res || {};
         }
     }
     return function() {
